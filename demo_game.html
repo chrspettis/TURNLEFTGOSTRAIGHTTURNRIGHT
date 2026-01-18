@@ -3,92 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Turn-Left Go-Straight Turn-Right Game</title>
-
+  <title>Turn-Left Go-Straight Turn-Right – Demo</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: white;
       color: black;
-      margin: 0;
       padding: 0;
+      margin: 0;
       text-align: center;
     }
+
     .container {
       width: 90%;
       max-width: 1000px;
       margin: auto;
-      padding-top: 20px;
+      padding-top: 30px;
     }
-    .banner {
+
+    .splash-banner {
       width: 100%;
-      height: auto;
       max-width: 1200px;
+      height: auto;
       border-radius: 12px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
+
     .button-group {
-      margin-top: 30px;
+      margin-top: 40px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
       align-items: center;
+      gap: 20px;
     }
+
     .btn {
-      padding: 14px 30px;
-      font-size: 18px;
+      padding: 14px 28px;
+      font-size: 16px;
       font-weight: bold;
-      border-radius: 10px;
       text-decoration: none;
+      border: 2px solid #c39d56;
+      border-radius: 12px;
       background-color: #c39d56;
       color: black;
-      border: 2px solid #c39d56;
-      width: 240px;
-      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       transition: 0.3s ease;
     }
+
     .btn:hover {
       transform: translateY(-2px);
       opacity: 0.9;
     }
+
     footer {
       margin-top: 60px;
-      font-size: 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-size: 14px;
       gap: 10px;
     }
+
     footer img {
-      height: 36px;
+      height: 40px;
     }
   </style>
 </head>
-
 <body>
   <div class="container">
+    <!-- 🔥 Game Banner -->
+    <img src="banner.png" alt="Splash Banner" class="splash-banner" />
 
-    <!-- Local Banner -->
-    <img src="banner.png" alt="Game Banner" class="banner">
-
-    <!-- Local Buttons -->
+    <!-- 🎮 Game Buttons -->
     <div class="button-group">
-      <!-- This launches the real game logic (local file) -->
-      <a href="04_TLGSTR_GAME_local.html" class="btn" target="_blank">PLAY</a>
-
-      <!-- Local student instructions PDF -->
-      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank">HOW TO</a>
-
-      <!-- Local printable scroll -->
-      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank">Open Printable Story Scroll</a>
+      <a href="04_TLGSTR_GAME.html" class="btn" target="_blank" rel="noopener">PLAY GAME</a>
+      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank" rel="noopener">HOW TO</a>
+      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank" rel="noopener">Open Printable Story Scroll</a>
     </div>
 
-    <!-- Footer -->
+    <!-- 📎 Footer -->
     <footer>
       <div>© Christy Pettis 2026</div>
-      <img src="08_PLI LOGO.png" alt="Proximity Learning Logo">
+      <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" />
     </footer>
-
   </div>
 </body>
 </html>
