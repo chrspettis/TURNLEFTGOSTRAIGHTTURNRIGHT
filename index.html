@@ -2,87 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Turn-Left Go-Straight Turn-Right</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: white;
-      text-align: center;
+      color: black;
+      padding: 0;
       margin: 0;
-      padding: 0 20px;
+      text-align: center;
     }
+
     .container {
+      width: 90%;
       max-width: 900px;
-      margin: 0 auto;
+      margin: auto;
+      padding-top: 40px;
     }
+
     img {
       max-width: 100%;
       height: auto;
-      margin-top: 30px;
+      margin-bottom: 30px;
     }
+
     .btn {
       display: inline-block;
-      padding: 14px 28px;
-      border-radius: 12px;
+      padding: 14px 30px;
+      margin: 12px 0;
       font-size: 16px;
-      font-weight: bold;
-      margin: 12px auto;
-      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      background-color: #003366;
       border: none;
+      border-radius: 10px;
       cursor: pointer;
-      width: 260px;
+      text-decoration: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
     }
+
     .btn.play {
-      background-color: #c39d55;
-      color: #07183c;
+      background-color: #c39d56;
+      color: #000;
     }
-    .btn.how {
-      background-color: #07183c;
-      color: white;
+
+    .btn:hover {
+      opacity: 0.9;
     }
-    .btn.scroll {
-      background-color: #0a0a23;
-      color: white;
-    }
+
     footer {
       margin-top: 60px;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       font-size: 14px;
-      color: #333;
-      border-top: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
+
     footer img {
       height: 40px;
-    }
-    @media (max-width: 600px) {
-      .btn {
-        width: 90%;
-      }
-      footer {
-        flex-direction: column;
-        gap: 10px;
-      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Splash Image -->
-    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right Banner" />
+    <!-- Banner Image -->
+    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right Banner"/>
 
     <!-- Buttons -->
     <div>
-      <a href="demo_game.html" class="btn play">PLAY GAME</a><br />
-      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn how" target="_blank">HOW TO</a><br />
-      <a href="01_Printable_Story_Scroll_v2m.html" class="btn scroll" target="_blank">Open Printable Story Scroll</a>
+      <a href="04_TLGSTR_GAME.html" class="btn play" target="_blank">PLAY GAME</a><br/>
+      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank">HOW TO</a><br/>
+      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank">Open Printable Story Scroll</a>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
     <div>© Christy Pettis 2026</div>
     <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" />
