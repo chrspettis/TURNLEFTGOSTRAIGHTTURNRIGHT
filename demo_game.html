@@ -2,44 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TLGSTR Game Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Turn-Left Go-Straight Turn-Right</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: white;
-      text-align: center;
-      padding: 20px;
       color: black;
+      padding: 0;
+      margin: 0;
+      text-align: center;
     }
-    h1 {
-      font-size: 24px;
-      margin-top: 40px;
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: auto;
+      padding-top: 40px;
     }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+    }
+
     .btn {
       display: inline-block;
-      padding: 14px 28px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
+      padding: 14px 30px;
+      margin: 12px 0;
       font-size: 16px;
-      margin: 12px auto;
-      background-color: #c39d55;
-      color: #07183c;
+      font-weight: 600;
+      color: white;
+      background-color: #003366;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+
+    .btn.play {
+      background-color: #c39d56;
+      color: #000;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    footer img {
+      height: 40px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Banner Image -->
+    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right Banner"/>
 
-  <h1>Turn-Left Go-Straight Turn-Right</h1>
+    <!-- Buttons -->
+    <div>
+      <a href="04_TLGSTR_GAME.html" class="btn play" target="_blank">PLAY GAME</a><br/>
+      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank">HOW TO</a><br/>
+      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank">Open Printable Story Scroll</a>
+    </div>
+  </div>
 
-  <p>Welcome to the demo version of the game. Launch below:</p>
-
-  <a class="btn" href="./01_Printable_Story_Scroll_v2m.html" target="_blank">📝 Open Story Scroll</a>
-  <br />
-  <a class="btn" href="./03_TLGSTR_StudentInstructions.pdf" target="_blank">📘 View Student Instructions</a>
-
-  <p style="margin-top: 60px; font-size: 14px;">© Christy Pettis 2026</p>
-
+  <footer>
+    <div>© Christy Pettis 2026</div>
+    <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" />
+  </footer>
 </body>
 </html>
