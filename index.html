@@ -2,37 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Turn‑Left Go‑Straight Turn‑Right</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Turn-Left Go-Straight Turn-Right</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #fff; text-align: center; margin: 0; padding: 0; }
-    .btn { display: inline-block; margin: 12px 0; padding: 14px 30px; border-radius: 10px; font-size: 18px; text-decoration: none; font-weight: bold; color: white; background: #07183c; border: 2px solid #c39d55; }
-    .btn.play { background: #c39d55; color: #07183c; }
-    img { max-width: 100%; height: auto; margin-top: 20px; }
-    .container { width: 90%; max-width: 900px; margin: auto; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      margin: 10px auto;
+      width: 250px;
+    }
+    .btn.play {
+      background-color: #c39d55;
+      color: #07183c;
+    }
+    .btn.howto, .btn.scroll {
+      background-color: #07183c;
+      color: white;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: auto;
+    }
+    footer {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-
     <!-- Splash Image -->
-    <img src="banner.png" alt="Turn‑Left Go‑Straight Turn‑Right Banner">
+    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right Banner">
 
     <!-- Buttons -->
     <div>
-      <a href="04_TLGSTR_GAME.html" class="btn play" target="_blank">PLAY GAME</a>
+      <a href="./04_TLGSTR_GAME.html" class="btn play">PLAY GAME</a>
     </div>
-
     <div>
-      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank">HOW TO</a>
+      <a href="./03_TLGSTR_StudentInstructions.pdf" class="btn howto" target="_blank">HOW TO</a>
     </div>
-
     <div>
-      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank">Open Printable Story Scroll</a>
+      <a href="./01_Printable_Story_Scroll_v2m.html" class="btn scroll" target="_blank">Open Printable Story Scroll</a>
     </div>
-
   </div>
+
+  <footer>
+    <div>© Christy Pettis 2026</div>
+    <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" height="28">
+  </footer>
 
 </body>
 </html>
