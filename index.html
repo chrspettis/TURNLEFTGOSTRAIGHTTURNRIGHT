@@ -2,93 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Turn-Left Go-Straight Turn-Right</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Turn‑Left Go‑Straight Turn‑Right</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #1a062a;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      overflow: hidden;
-    }
-
-    .splash-container {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      background: url("07_SplashPage.png") center center / cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .button-row {
-      position: absolute;
-      bottom: 140px;
-      display: flex;
-      gap: 20px;
-    }
-
-    .splash-button {
-      background: rgba(7, 24, 60, 0.75); /* subtle dark background */
-      color: #f6e7b7; /* parchment-style gold text */
-      border: 2px solid #c39d55;
-      padding: 14px 26px;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .splash-button:hover {
-      background: rgba(195, 157, 85, 0.9);
-      color: #07183c;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
-    }
-
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      right: 30px;
-      left: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-    }
-
-    .footer .copyright {
-      color: white;
-    }
-
-    .footer img {
-      height: 32px;
-    }
-
-    @media (max-width: 600px) {
-      .splash-button {
-        font-size: 14px;
-        padding: 10px 18px;
-      }
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: #fff; text-align: center; margin: 0; padding: 0; }
+    .btn { display: inline-block; margin: 12px 0; padding: 14px 30px; border-radius: 10px; font-size: 18px; text-decoration: none; font-weight: bold; color: white; background: #07183c; border: 2px solid #c39d55; }
+    .btn.play { background: #c39d55; color: #07183c; }
+    img { max-width: 100%; height: auto; margin-top: 20px; }
+    .container { width: 90%; max-width: 900px; margin: auto; }
   </style>
 </head>
 <body>
-  <div class="splash-container">
-    <div class="button-row">
-      <a href="04_TLGSTR_GAME.html" class="splash-button">PLAY</a>
-      <a href="03_TLGSTR_StudentInstructions.pdf" class="splash-button" target="_blank">HOW TO</a>
+
+  <div class="container">
+
+    <!-- Splash Image -->
+    <img src="banner.png" alt="Turn‑Left Go‑Straight Turn‑Right Banner">
+
+    <!-- Buttons -->
+    <div>
+      <a href="04_TLGSTR_GAME.html" class="btn play" target="_blank">PLAY GAME</a>
     </div>
-    <div class="footer">
-      <div class="copyright">© Christy Pettis 2026</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Proximity_Learning_Logo.png/600px-Proximity_Learning_Logo.png" alt="Proximity Learning Logo" />
+
+    <div>
+      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank">HOW TO</a>
     </div>
+
+    <div>
+      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank">Open Printable Story Scroll</a>
+    </div>
+
   </div>
+
 </body>
 </html>
