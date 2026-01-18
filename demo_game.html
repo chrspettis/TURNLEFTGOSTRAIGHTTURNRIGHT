@@ -3,22 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Turn-Left Go-Straight Turn-Right – Demo</title>
+  <title>Turn-Left Go-Straight Turn-Right (Demo)</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: white;
       color: black;
-      padding: 0;
       margin: 0;
+      padding: 0;
       text-align: center;
     }
 
     .container {
-      width: 90%;
       max-width: 1000px;
       margin: auto;
-      padding-top: 30px;
+      padding: 20px;
     }
 
     .splash-banner {
@@ -27,65 +26,84 @@
       height: auto;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .button-group {
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      margin-bottom: 30px;
     }
 
     .btn {
-      padding: 14px 28px;
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 10px;
       font-size: 16px;
       font-weight: bold;
-      text-decoration: none;
+      border-radius: 10px;
       border: 2px solid #c39d56;
-      border-radius: 12px;
       background-color: #c39d56;
       color: black;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: 0.3s ease;
+      text-decoration: none;
     }
 
     .btn:hover {
-      transform: translateY(-2px);
       opacity: 0.9;
     }
 
     footer {
-      margin-top: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin-top: 40px;
       font-size: 14px;
-      gap: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     footer img {
-      height: 40px;
+      height: 36px;
+    }
+
+    #gameOutput {
+      margin-top: 30px;
+      text-align: left;
+      padding: 20px;
+      background: #f4f4f4;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- 🔥 Game Banner -->
-    <img src="banner.png" alt="Splash Banner" class="splash-banner" />
 
-    <!-- 🎮 Game Buttons -->
-    <div class="button-group">
-      <a href="04_TLGSTR_GAME.html" class="btn" target="_blank" rel="noopener">PLAY GAME</a>
-      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank" rel="noopener">HOW TO</a>
-      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank" rel="noopener">Open Printable Story Scroll</a>
-    </div>
+<div class="container">
+  <img src="banner.png" alt="Game Banner" class="splash-banner"/>
 
-    <!-- 📎 Footer -->
-    <footer>
-      <div>© Christy Pettis 2026</div>
-      <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" />
-    </footer>
+  <div id="gameArea">
+    <p><strong>Welcome, traveler.</strong> Choose your path:</p>
+    <button class="btn" onclick="playTurn('left')">Turn Left</button>
+    <button class="btn" onclick="playTurn('straight')">Go Straight</button>
+    <button class="btn" onclick="playTurn('right')">Turn Right</button>
+
+    <div id="gameOutput"></div>
   </div>
+
+  <footer>
+    <div>© Christy Pettis 2026</div>
+    <img src="08_PLI LOGO.png" alt="Proximity Learning Logo">
+  </footer>
+</div>
+
+<script>
+  const travelLog = [];
+
+  const locations = {
+    left: ["Whispering Woods", "The Red Barn", "Clock Tower"],
+    straight: ["Stone Bridge", "Sunny Square", "Book Nook"],
+    right: ["Willow Creek", "Puzzle Path", "Sketch Alley"]
+  };
+
+  function playTurn(direction) {
+    const options = locations[direction];
+    const destination = options[Math.floor(Math.random() * options.length)];
+    travelLog.push(`You turned ${direction} and arrived at: <strong>${destination}</strong>.`);
+
+    document.getElementById("gameOutput").innerHTML = travelLog.join("<br><br>");
+  }
+</script>
+
 </body>
 </html>
