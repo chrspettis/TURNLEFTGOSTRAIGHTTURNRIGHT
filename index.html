@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Turn-Left Go-Straight Turn-Right</title>
   <style>
     body {
@@ -10,69 +10,82 @@
       background: white;
       text-align: center;
       margin: 0;
-      padding: 0;
+      padding: 0 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 30px;
     }
     .btn {
       display: inline-block;
       padding: 14px 28px;
       border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
       font-size: 16px;
-      margin: 10px auto;
-      width: 250px;
+      font-weight: bold;
+      margin: 12px auto;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      width: 260px;
     }
     .btn.play {
       background-color: #c39d55;
       color: #07183c;
     }
-    .btn.howto, .btn.scroll {
+    .btn.how {
       background-color: #07183c;
       color: white;
     }
-    img {
-      max-width: 100%;
-      height: auto;
-      margin-top: 20px;
-    }
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: auto;
+    .btn.scroll {
+      background-color: #0a0a23;
+      color: white;
     }
     footer {
-      margin-top: 30px;
+      margin-top: 60px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
       font-size: 14px;
+      color: #333;
+      border-top: 1px solid #ccc;
+    }
+    footer img {
+      height: 40px;
+    }
+    @media (max-width: 600px) {
+      .btn {
+        width: 90%;
+      }
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
-
   <div class="container">
     <!-- Splash Image -->
-    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right Banner">
+    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right Banner" />
 
     <!-- Buttons -->
     <div>
-      <a href="./04_TLGSTR_GAME.html" class="btn play">PLAY GAME</a>
-    </div>
-    <div>
-      <a href="./03_TLGSTR_StudentInstructions.pdf" class="btn howto" target="_blank">HOW TO</a>
-    </div>
-    <div>
-      <a href="./01_Printable_Story_Scroll_v2m.html" class="btn scroll" target="_blank">Open Printable Story Scroll</a>
+      <a href="demo_game.html" class="btn play">PLAY GAME</a><br />
+      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn how" target="_blank">HOW TO</a><br />
+      <a href="01_Printable_Story_Scroll_v2m.html" class="btn scroll" target="_blank">Open Printable Story Scroll</a>
     </div>
   </div>
 
-<footer style="margin-top: 50px; text-align: center; font-size: 14px; color: #333;">
-  <div style="margin-bottom: 8px;">© Christy Pettis 2026</div>
-  <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" style="height: 34px; max-width: 200px;">
-</footer>
-  
+  <!-- Footer -->
+  <footer>
+    <div>© Christy Pettis 2026</div>
+    <img src="08_PLI LOGO.png" alt="Proximity Learning Logo" />
+  </footer>
 </body>
 </html>
-
