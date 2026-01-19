@@ -9,45 +9,44 @@
       font-family: 'Segoe UI', sans-serif;
       background: white;
       color: black;
-      text-align: center;
       margin: 0;
       padding: 0;
+      text-align: center;
     }
 
     .container {
-      width: 90%;
       max-width: 1000px;
       margin: auto;
-      padding-top: 30px;
+      padding: 30px 20px;
     }
 
-    .splash-banner {
+    .banner {
       width: 100%;
       max-width: 1200px;
       height: auto;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      margin-bottom: 40px;
     }
 
     .button-group {
-      margin-top: 40px;
       display: flex;
       flex-direction: column;
+      gap: 16px;
       align-items: center;
-      gap: 20px;
+      margin-bottom: 60px;
     }
 
     .btn {
       padding: 14px 28px;
       font-size: 16px;
       font-weight: bold;
-      text-decoration: none;
-      border: 2px solid #c39d56;
       border-radius: 12px;
+      border: 2px solid #c39d56;
       background-color: #c39d56;
       color: black;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: 0.3s ease;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
 
     .btn:hover {
@@ -56,27 +55,27 @@
     }
 
     footer {
-      margin-top: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       font-size: 14px;
-      gap: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 60px;
+      padding: 0 10px;
     }
 
     footer img {
-      height: 40px;
+      height: 36px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="banner.png" alt="Splash Banner" class="splash-banner" />
+    <img src="banner.png" alt="Turn-Left Go-Straight Turn-Right" class="banner" />
 
     <div class="button-group">
-      <a href="demo_game.html" class="btn" target="_blank" rel="noopener">PLAY GAME</a>
-      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank" rel="noopener">HOW TO</a>
-      <a href="01_Printable_Story_Scroll_v2m.html" class="btn" target="_blank" rel="noopener">Open Printable Story Scroll</a>
+      <a href="04_TLGSTR_GAME.html" class="btn">PLAY GAME</a>
+      <a href="03_TLGSTR_StudentInstructions.pdf" class="btn" target="_blank">STUDENT INSTRUCTIONS</a>
+      <a href="01_Printable_Story_Scroll_v2.html" class="btn" target="_blank">PRINTABLE STORY SCROLL</a>
     </div>
 
     <footer>
