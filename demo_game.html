@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Turn-Left Go-Straight Turn-Right</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: white;
+      color: black;
+      margin: 0;
+      padding: 0;
+    }
+    .splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(2,6,23,.86);
+      overflow: auto;
+    }
+    .splash-inner {
+      width: min(980px, 100%);
+      max-height: 92vh;
+      border-radius: 14px;
+      border: 2px solid rgba(195,157,85,.55);
+      background: linear-gradient(180deg, rgba(7,24,60,.92), rgba(42,13,40,.88));
+      box-shadow: 0 22px 70px rgba(0,0,0,.55);
+      overflow: hidden;
+    }
+    .splash-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .splash-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.28);
+    }
+    .splash-buttons {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .splash-buttons a {
+      background-color: rgba(7,24,60,0.9);
+      color: #f6e7b7;
+      padding: 14px 28px;
+      border: 2px solid #c39d55;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    }
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div class="splash" id="splash">
+  <div class="splash-inner">
+    <div style="position:relative;">
+      <img src="banner.png" alt="TURN-LEFT GO-STRAIGHT TURN-RIGHT" class="splash-image" />
+      <div class="splash-overlay"></div>
+      <div class="splash-buttons">
+        <a href="TLGSTL_GAME.html">PLAY</a>
+        <a href="student_instructions.pdf">HOW TO</a>
+        <a href="printable_story_scroll.html">Printable Story Scroll</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <img src="pli_logo.png" alt="Proximity Learning Logo" height="24" />
+  <br/>
+  © Christy Pettis 2026
+</footer>
+
+</body>
+</html>
