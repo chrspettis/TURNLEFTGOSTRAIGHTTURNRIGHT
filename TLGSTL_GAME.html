@@ -2,706 +2,290 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TURN-LEFT GO-STRAIGHT TURN-RIGHT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: white;
-      color: black;
+      background: linear-gradient(to bottom, #07183c, #2a0d28);
+      color: #fefefe;
     }
-
-    .splash {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(2,6,23,.86);
-      overflow: auto;
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px;
+      color: #c39d55;
     }
-
-    .splash-inner {
-      width: min(980px, 100%);
-      max-height: 92vh;
-      border-radius: 14px;
-      border: 2px solid rgba(195,157,85,.55);
-      background: linear-gradient(180deg, rgba(7,24,60,.92), rgba(42,13,40,.88));
-      box-shadow: 0 22px 70px rgba(0,0,0,.55);
-      overflow: hidden;
+    .sub {
+      margin: 0 20px 20px;
+      font-size: 16px;
+      color: rgba(207,203,193,.85);
     }
-
-    .splash-image {
-      display: block;
-      width: 100%;
-      height: auto;
+    .wrap {
+      padding: 20px;
     }
-
-    .splash-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,.28);
-    }
-
-    .splash-buttons {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
       gap: 20px;
     }
-
-    .splash-buttons a,
-    .splash-buttons button {
-      background-color: rgba(7,24,60,0.9);
-      color: #f6e7b7;
-      padding: 14px 28px;
-      border: 2px solid #c39d55;
+    .panel {
+      background: rgba(2,6,23,0.35);
+      border: 1px solid rgba(195,157,85,0.4);
       border-radius: 12px;
-      font-size: 18px;
+      padding: 20px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .stat {
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(2,6,23,0.35);
+      border: 1px solid rgba(195,157,85,0.22);
+    }
+    .label {
+      font-size: 12px;
+      color: rgba(207,203,193,0.85);
+    }
+    .value {
+      font-size: 16px;
+      color: #fafbfd;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 14px;
       font-weight: bold;
-      text-decoration: none;
-      text-align: center;
-      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+      border-radius: 10px;
+      border: 1px solid rgba(207,203,193,0.22);
+      background: linear-gradient(to bottom, rgba(195,157,85,0.98), rgba(141,102,54,0.98));
+      color: #07183c;
       cursor: pointer;
-      min-width: 220px;
+      min-width: 120px;
     }
-
-    .game-container {
+    button:hover {
+      filter: brightness(1.05);
+    }
+    .lists {
+      margin-top: 20px;
+    }
+    .lists h3 {
+      margin: 10px 0;
+      color: #fefefe;
+    }
+    .pillRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill {
+      background: rgba(42,13,40,0.28);
+      border: 1px solid rgba(195,157,85,0.18);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .log {
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid rgba(195,157,85,0.22);
+      border-radius: 10px;
+      background: rgba(2,6,23,0.22);
+      font-size: 14px;
+      line-height: 1.5;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .mapGrid {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 6px;
+    }
+    .cell {
+      width: 30px;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(195,157,85,0.10);
+    }
+    .cell.visited {
+      background: rgba(42,13,40,0.18);
+      border-color: rgba(195,157,85,0.16);
+    }
+    .cell.current {
+      outline: 2px solid rgba(195,157,85,0.92);
+    }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.8);
       display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
     }
- .wrap {
-  max-width: 1220px;
-  margin: 0 auto;
-  padding: 22px;
-}
-
-h1 {
-  margin: 0 0 6px;
-  font-size: 24px;
-  letter-spacing: .4px;
-  color: #c39d55;
-  text-shadow: 0 2px 14px rgba(0,0,0,.45);
-}
-
-.sub {
-  margin: 0 0 16px;
-  color: rgba(207,203,193,.85);
-  line-height: 1.4;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 14px;
-}
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.panel {
-  background: linear-gradient(180deg, rgba(7,24,60,.55), rgba(42,13,40,.35));
-  border: 1px solid rgba(195,157,85,.40);
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 18px 50px rgba(0,0,0,.45);
-  color: #fafbfd;
-}
-
-.stat {
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(2,6,23,.35);
-  border: 1px solid rgba(195,157,85,.22);
-}
-
-.label {
-  font-size: 12px;
-  color: rgba(207,203,193,.85);
-}
-
-.value {
-  font-size: 16px;
-  margin-top: 2px;
-  color: #fafbfd;
-}
-
-.select,
-select {
-  background: rgba(2,6,23,.28);
-  border: 1px solid rgba(195,157,85,.40);
-  color: #fafbfd;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.stat {
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(2,6,23,.35);
-  border: 1px solid rgba(195,157,85,.22);
-}
-
-.label {
-  display: block;
-  font-size: 12px;
-  color: rgba(207,203,193,.85);
-}
-
-.value {
-  font-size: 16px;
-  margin-top: 2px;
-  color: #fafbfd;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 12px;
-}
-
-button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: 1px solid rgba(207,203,193,.22);
-  background: linear-gradient(180deg, rgba(195,157,85,.98), rgba(141,102,54,.98));
-  color: #07183c;
-  padding: 14px 10px;
-  font-weight: 900;
-  letter-spacing: .4px;
-  box-shadow: 0 10px 28px rgba(0,0,0,.35);
-}
-
-button:hover {
-  filter: brightness(1.06);
-}
-
-button:active {
-  transform: translateY(1px);
-}
-
-button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-  transform: none;
-}
-.lists {
-  margin-top: 12px;
-  display: grid;
-  gap: 10px;
-}
-
-.listBox {
-  border-radius: 12px;
-  border: 1px solid rgba(195,157,85,.22);
-  background: rgba(2,6,23,.25);
-  padding: 12px;
-}
-
-.listBox h3 {
-  margin: 0 0 8px;
-  font-size: 14px;
-  color: #c39d55;
-  letter-spacing: .2px;
-}
-
-.pillRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.pill {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(195,157,85,.18);
-  background: rgba(42,13,40,.18);
-  color: #fafbfd;
-  font-size: 13px;
-}
-
-.pill svg {
-  width: 14px;
-  height: 14px;
-  opacity: .95;
-}
-
-.log {
-  margin-top: 14px;
-  max-height: 220px;
-  overflow: auto;
-  border-radius: 10px;
-  border: 1px solid rgba(195,157,85,.22);
-  background: rgba(2,6,23,.22);
-  padding: 10px;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.log p {
-  margin: 8px 0;
-  color: #fafbfd;
-}
-
-.log .muted {
-  color: rgba(207,203,193,.85);
-}
-.mapHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.mapHead .hint {
-  color: rgba(207,203,193,.85);
-  font-size: 12px;
-  line-height: 1.3;
-}
-
-.mapWrap {
-  border-radius: 12px;
-  border: 1px solid rgba(195,157,85,.40);
-  background: rgba(2,6,23,.22);
-  padding: 12px;
-}
-
-.mapGrid {
-  display: grid;
-  grid-template-columns: repeat(11, 1fr);
-  gap: 6px;
-}
-
-.cell {
-  aspect-ratio: 1/1;
-  border-radius: 8px;
-  border: 1px solid rgba(195,157,85,.10);
-  background: rgba(255,255,255,.03);
-  display: grid;
-  place-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.cell.visited {
-  background: rgba(42,13,40,.18);
-  border-color: rgba(195,157,85,.16);
-}
-
-.cell.current {
-  outline: 2px solid rgba(195,157,85,.92);
-}
-
-.cell .mini {
-  width: 18px;
-  height: 18px;
-  opacity: .95;
-}
-
-.cell .arrow {
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 10px solid rgba(195,157,85,.95);
-  transform-origin: center;
-  position: absolute;
-  top: 6px;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,.35));
-}
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(2,6,23,.78);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  z-index: 9999;
-}
-
-.modal {
-  width: min(920px, 100%);
-  background: linear-gradient(180deg, rgba(7,24,60,.95), rgba(42,13,40,.92));
-  border: 1px solid rgba(195,157,85,.40);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.55);
-  color: #fafbfd;
-}
-
-.modal h2 {
-  margin: 0 0 6px;
-  font-size: 18px;
-  color: #c39d55;
-}
-
-.modal .meta {
-  color: rgba(207,203,193,.85);
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-
-.dialogue {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(195,157,85,.18);
-  background: rgba(2,6,23,.28);
-  color: #fafbfd;
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
-
-.card {
-  border-radius: 12px;
-  border: 1px solid rgba(195,157,85,.18);
-  background: rgba(42,13,40,.18);
-  padding: 12px;
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  gap: 10px;
-  align-items: start;
-  margin-top: 10px;
-}
-
-.poiIcon {
-  width: 32px;
-  height: 32px;
-  opacity: .98;
-}
-
-.poi-name {
-  font-size: 18px;
-  font-weight: 900;
-  margin: 0 0 6px;
-  color: #c39d55;
-}
-
-.poi-desc {
-  margin: 0;
-  color: #fafbfd;
-}
-
-.promptNext {
-  margin-top: 10px;
-  color: #fafbfd;
-  font-weight: 900;
-  letter-spacing: .1px;
-}
-
-.modal .actions {
-  margin-top: 12px;
-  display: flex;
-  gap: 10px;
-}
-
-.modal .actions button {
-  flex: 1;
-  padding: 10px;
-  font-weight: 900;
-}
-
-.kbd {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 12px;
-}
-.navRow {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.navRow button {
-  flex: 1;
-  min-width: 100px;
-  text-align: center;
-}
-
- </style>
+    .modal {
+      background: linear-gradient(180deg, rgba(7,24,60,.95), rgba(42,13,40,.92));
+      border: 1px solid rgba(195,157,85,.40);
+      border-radius: 12px;
+      padding: 20px;
+      width: min(90vw, 720px);
+      color: #fafbfd;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+    .modal h2 {
+      margin-top: 0;
+      color: #c39d55;
+    }
+  </style>
 </head>
 <body>
-
-<!-- Splash Screen -->
-<div class="splash" id="splash">
-  <div class="splash-inner">
-    <div style="position:relative;">
-      <img src="banner.png" alt="TURN-LEFT GO-STRAIGHT TURN-RIGHT" class="splash-image" />
-      <div class="splash-overlay"></div>
-      <div class="splash-buttons">
-        <button id="startGameBtn">PLAY</button>
-        <a href="student_instructions.pdf" target="_blank" rel="noopener noreferrer">HOW TO</a>
-        <a href="printable_story_scroll.html" target="_blank" rel="noopener noreferrer">Printable Story Scroll</a>
+<div class="wrap">
+  <h1>TURN-LEFT GO-STRAIGHT TURN-RIGHT</h1>
+  <p class="sub">Students preview routes and choose intentionally.</p>
+  <div class="grid">
+    <div class="panel">
+      <div class="stats">
+        <div class="stat"><div class="label">Position</div><div class="value" id="pos">0, 0</div></div>
+        <div class="stat"><div class="label">Facing</div><div class="value" id="facing">North</div></div>
+        <div class="stat"><div class="label">Moves</div><div class="value" id="moves">0</div></div>
+        <div class="stat"><div class="label">Auto-Save</div><div class="value">On</div></div>
       </div>
+      <div class="buttons">
+        <button id="btnLeft">TURN-LEFT</button>
+        <button id="btnStraight">GO-STRAIGHT</button>
+        <button id="btnRight">TURN-RIGHT</button>
+      </div>
+      <div class="buttons">
+        <button id="btnNew">New Game</button>
+        <button id="btnClearJournal">Clear Journal</button>
+        <button id="btnEraseSave">Erase Save</button>
+      </div>
+      <div class="lists">
+        <h3>Clues</h3><div class="pillRow" id="invRow"></div>
+        <h3>Contacts</h3><div class="pillRow" id="peopleRow"></div>
+        <h3>Landmarks</h3><div class="pillRow" id="placesRow"></div>
+      </div>
+      <div class="log" id="log"></div>
+    </div>
+    <div class="panel">
+      <h3>Map</h3>
+      <div class="mapGrid" id="mapGrid"></div>
     </div>
   </div>
 </div>
 
-
-<!-- Game Container Start -->
-<div class="game-container" id="gameApp">
-  <div class="wrap">
-    <h1>TURN-LEFT GO-STRAIGHT TURN-RIGHT</h1>
-    <p class="sub">Students can preview the next three destinations and choose their route on purpose.</p>
-
-    <div class="grid">
-      <div class="panel">
-        <div class="stats">
-          <div class="stat"><span class="label">Position</span><span class="value" id="pos">0, 0</span></div>
-          <div class="stat"><span class="label">Facing</span><span class="value" id="facing">North</span></div>
-          <div class="stat"><span class="label">Moves</span><span class="value" id="moves">0</span></div>
-          <div class="stat"><span class="label">Auto-Save</span><span class="value" id="saveStatus">On</span></div>
-        </div>
-
-        <div class="storyBox">
-          <p class="storyTitle" id="storyTitle"></p>
-          <p class="storyObj" id="storyObjective"></p>
-          <div class="storyMeta" id="storyMeta"></div>
-        </div>
-
-        <div class="goalBox">
-          <div class="goalRow">
-            <label for="goalSelect">Student Goal:</label>
-            <select id="goalSelect">
-              <option value="explore">Explorer Route (reach the ending)</option>
-              <option value="landmark">Landmark Route (collect places)</option>
-              <option value="contact">Contact Route (meet people)</option>
-              <option value="clue">Clue Route (collect objects)</option>
-            </select>
-          </div>
-          <div class="goalText" id="goalText"></div>
-        </div>
-
-        <div class="signpostBox">
-          <p class="signpostTitle">Street Signs (preview your next three options)</p>
-          <div class="signGrid">
-            <div class="signCard">
-              <div class="signHdr">
-                <div class="signDir">TURN-LEFT</div>
-                <div class="signTag" id="leftTag"></div>
-              </div>
-              <div class="signName" id="leftName"></div>
-              <div class="signNote" id="leftNote"></div>
-            </div>
-            <div class="signCard">
-              <div class="signHdr">
-                <div class="signDir">GO-STRAIGHT</div>
-                <div class="signTag" id="straightTag"></div>
-              </div>
-              <div class="signName" id="straightName"></div>
-              <div class="signNote" id="straightNote"></div>
-            </div>
-            <div class="signCard">
-              <div class="signHdr">
-                <div class="signDir">TURN-RIGHT</div>
-                <div class="signTag" id="rightTag"></div>
-              </div>
-              <div class="signName" id="rightName"></div>
-              <div class="signNote" id="rightNote"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="buttons">
-          <button id="btnLeft" aria-label="Turn left">TURN-LEFT</button>
-          <button id="btnStraight" aria-label="Go straight">GO-STRAIGHT</button>
-          <button id="btnRight" aria-label="Turn right">TURN-RIGHT</button>
-        </div>
-
-        <div class="row">
-          <button id="btnNew">New Game</button>
-          <button id="btnClearJournal">Clear Journal</button>
-          <button id="btnEraseSave">Erase Save</button>
-        </div>
-
-        <div class="lists">
-          <div class="listBox">
-            <h3>Clues (Objects)</h3>
-            <div class="pillRow" id="invRow"></div>
-          </div>
-          <div class="listBox">
-            <h3>Contacts (People)</h3>
-            <div class="pillRow" id="peopleRow"></div>
-          </div>
-          <div class="listBox">
-            <h3>Landmarks (Places)</h3>
-            <div class="pillRow" id="placesRow"></div>
-          </div>
-        </div>
-
-        <div class="log" id="log" aria-live="polite"></div>
-      </div>
-      <div class="panel">
-        <div class="mapHead">
-          <div>
-            <div style="font-weight:700; letter-spacing:.2px;">Map</div>
-            <div class="hint">11×11 view centered on the player. Visited tiles show type.</div>
-          </div>
-          <div class="hint" id="mapCenter">Center: (0, 0)</div>
-        </div>
-
-        <div class="mapWrap">
-          <div class="mapGrid" id="mapGrid"></div>
-        </div>
-      </div>
-    </div>
+<div class="modal-backdrop" id="backdrop">
+  <div class="modal">
+    <h2 id="modalMeta"></h2>
+    <p id="travelText"></p>
+    <p class="poi-name" id="poiName" style="font-weight:bold; color:#c39d55;"></p>
+    <p id="poiDesc"></p>
+    <p id="promptNext" style="margin-top:20px; font-weight:bold;"></p>
+    <div class="buttons" style="margin-top:16px;"><button id="btnContinue">Close</button></div>
   </div>
-
-  <!-- Modal -->
-  <div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <h2 id="modalTitle">Travel Report</h2>
-      <div class="meta" id="modalMeta"></div>
-
-      <div class="dialogue" id="travelText"></div>
-
-      <div class="card">
-        <div id="poiIcon"></div>
-        <div>
-          <p class="poi-name" id="poiName"></p>
-          <p class="poi-desc" id="poiDesc"></p>
-        </div>
-      </div>
-
-      <div class="dialogue" id="poiDialogue" style="display:none;"></div>
-      <div class="dialogue" id="fsPrompt" style="display:none;"></div>
-
-      <div class="promptNext" id="promptNext">What direction would you like to go next?</div>
-
-      <div class="actions">
-        <button id="btnContinue">Close</button>
-      </div>
-      <p class="meta" style="margin-top:10px;">Tip: Press <span class="kbd">Esc</span> to close.</p>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div id="tlgs-footer" style="
-    position: fixed;
-    left: 14px;
-    right: 14px;
-    bottom: 10px;
-    z-index: 10;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 10px;
-    opacity: .85;
-    pointer-events: none;
-  ">
-    <div style="color:#ffffff; font-size:12px; font-weight:800; letter-spacing:.2px;">© Christy Pettis 2026</div>
-    <img id="pliLogoFooter" src="" alt="Proximity Learning" style="height:22px; width:auto;" />
-  </div>
+</div>
 <script>
-document.getElementById("startGameBtn").addEventListener("click", () => {
-  document.getElementById("splash").style.display = "none";
-  document.getElementById("gameApp").style.display = "block";
-});
+/* JS CODE CONTINUES BELOW THIS LINE… */
+</script>
+</body>
+</html>
+<script>
+const SAVE_KEY = "TLGSTL_SAVE";
+const POIS = {
+  places: [
+    { name: "Clocktower Plaza", desc: "The chime is late by one beat. Every time." },
+    { name: "Willowbend Reading Nook", desc: "Dusty pages flutter even without wind." },
+    { name: "Harborstone Ferry Ramp", desc: "The ramp dips into grass, not water." },
+    { name: "Evergreen Coffee Roasters", desc: "Always smells freshly brewed, even at night." },
+    { name: "Underground Stage", desc: "No lights. Just footprints in chalk." }
+  ],
+  people: [
+    { name: "The Street Artist", desc: "Watches your hands instead of your face." },
+    { name: "The Archivist", desc: "Knows what you’re looking for before you do." },
+    { name: "The Night Courier", desc: "Delivers memories, not mail." },
+    { name: "The Quiet Neighbor", desc: "Never seen leaving, never heard arriving." },
+    { name: "The Open-Shop Owner", desc: "Greets you like you’re late." },
+    { name: "The Mechanic", desc: "Fixes things that aren't broken." },
+    { name: "The Lost Tourist", desc: "They ask for directions without a map." }
+  ],
+  objects: [
+    { name: "Pocket Compass", desc: "Points to where you felt safe last." },
+    { name: "Map Fragment", desc: "Curled edge. Ink runs like it was wept on." },
+    { name: "Polaroid Photo", desc: "A place you haven’t been… yet." },
+    { name: "Rusty Key", desc: "Labeled: Not the Front Door." },
+    { name: "Brass Token", desc: "Worn smooth by anxious fingers." },
+    { name: "Chalk Marker", desc: "Uncap it and your hand shakes." },
+    { name: "Bent Street Sign", desc: "Still legible, just not in your language." }
+  ]
+};
 
-/* ---- START GAME CODE (from TLGSTL_GAME_local.html) ---- */
-/* Due to message limits, I’m breaking this script block in two parts — this one sets up the core logic, the next will complete the rest. */
+let state = {
+  seed: Date.now() >>> 0,
+  x: 0,
+  y: 0,
+  facing: 0,
+  moves: 0,
+  visited: new Set(["0,0"]),
+  discovered: new Map(),
+  inventory: new Set(),
+  metPeople: new Set(),
+  foundPlaces: new Set(),
+  story: { chapter: 0, journal: [] }
+};
 
-const SAVE_KEY = "TLGS_TR_student_paths_v4";
-
-let state = null;
-
-function setText(id, text) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = text;
+function stepForwardFrom(x, y, facing) {
+  return facing === 0 ? { x, y: y + 1 }
+       : facing === 1 ? { x: x + 1, y }
+       : facing === 2 ? { x, y: y - 1 }
+       : { x: x - 1, y };
 }
 
-function serializeState(st) {
-  return JSON.stringify({
-    seed: st.seed,
-    x: st.x, y: st.y,
-    facing: st.facing,
-    moves: st.moves,
-    visited: Array.from(st.visited),
-    discovered: Array.from(st.discovered.entries()),
-    inventory: Array.from(st.inventory),
-    metPeople: Array.from(st.metPeople),
-    foundPlaces: Array.from(st.foundPlaces),
-    story: st.story,
-    studentGoal: st.studentGoal
-  });
-}
-
-function deserializeState(json) {
-  const o = JSON.parse(json);
-  return {
-    seed: o.seed,
-    x: o.x, y: o.y,
-    facing: o.facing,
-    moves: o.moves,
-    visited: new Set(o.visited || []),
-    discovered: new Map(o.discovered || []),
-    inventory: new Set(o.inventory || []),
-    metPeople: new Set(o.metPeople || []),
-    foundPlaces: new Set(o.foundPlaces || []),
-    story: o.story || { chapter: 0, journal: [], flags: {} },
-    studentGoal: o.studentGoal || "explore"
-  };
-}
-
-function saveGame() {
-  try {
-    localStorage.setItem(SAVE_KEY, serializeState(state));
-    setText("saveStatus", "Saved");
-    setTimeout(() => setText("saveStatus", "On"), 600);
-  } catch {
-    setText("saveStatus", "Save Failed");
-  }
-}
-
-function loadGameIfPresent() {
-  const raw = localStorage.getItem(SAVE_KEY);
-  if (!raw) return false;
-  try { state = deserializeState(raw); return true; } catch { return false; }
-}
-
-function eraseSave() {
-  localStorage.removeItem(SAVE_KEY);
-  setText("saveStatus", "Erased");
-  setTimeout(() => setText("saveStatus", "On"), 800);
-}
-
-/* Navigation helpers */
 function turn(delta, facing) {
   return (facing + delta + 4) % 4;
 }
 
-function stepForwardFrom(x, y, facing) {
-  if (facing === 0) return { x, y: y + 1 };
-  if (facing === 1) return { x: x + 1, y };
-  if (facing === 2) return { x, y: y - 1 };
-  return { x: x - 1, y };
+function computePOI(x, y, seed) {
+  const key = (x * 73856093) ^ (y * 19349663) ^ seed;
+  const r = Math.abs(key);
+  const types = ["places", "objects", "people"];
+  const t = types[r % 3];
+  const list = POIS[t];
+  const i = r % list.length;
+  return { ...list[i], type: t };
 }
 
-/* UI utilities */
-function setLog(html) {
-  document.getElementById("log").innerHTML = html;
+function pickPOI(x, y) {
+  const key = `${x},${y}`;
+  if (!state.discovered.has(key)) {
+    state.discovered.set(key, computePOI(x, y, state.seed));
+  }
+  return {
+    poi: state.discovered.get(key),
+    isNewTile: !state.visited.has(key)
+  };
+}
+
+function travelNarration(choice, steps, poi, isNewTile) {
+  const lead = poi.type === "places" ? "front steps of the"
+             : poi.type === "people" ? "corner where you spot"
+             : "spot where you notice";
+  return `You walked ${steps} steps and arrived at the ${lead} ${poi.name}.`;
+}
+
+function journalEntry(msg) {
+  state.story.journal.push(msg);
+  writeLog(msg);
 }
 
 function writeLog(msg, muted = false) {
@@ -713,24 +297,144 @@ function writeLog(msg, muted = false) {
   log.scrollTop = log.scrollHeight;
 }
 
-function showModal(meta, travelText, poi, dialogue, goalLine) {
+function showModal(meta, text, poi) {
   document.getElementById("modalMeta").textContent = meta;
-  document.getElementById("travelText").textContent = travelText;
+  document.getElementById("travelText").textContent = text;
   document.getElementById("poiName").textContent = poi.name;
   document.getElementById("poiDesc").textContent = poi.desc;
-  document.getElementById("promptNext").textContent = goalLine || "What direction would you like to go next?";
   document.getElementById("backdrop").style.display = "flex";
 }
 
 function hideModal() {
   document.getElementById("backdrop").style.display = "none";
 }
+
+function chooseDirection(choice) {
+  if (choice === "LEFT") state.facing = turn(-1, state.facing);
+  if (choice === "RIGHT") state.facing = turn(1, state.facing);
+  const next = stepForwardFrom(state.x, state.y, state.facing);
+  state.x = next.x;
+  state.y = next.y;
+  state.moves++;
+  const posKey = `${state.x},${state.y}`;
+  const { poi: rawPOI, isNewTile } = pickPOI(state.x, state.y);
+  const poi = rawPOI;
+  state.visited.add(posKey);
+
+  if (isNewTile) {
+    if (poi.type === "objects") state.inventory.add(poi.name);
+    if (poi.type === "people") state.metPeople.add(poi.name);
+    if (poi.type === "places") state.foundPlaces.add(poi.name);
+    syncLists();
+  }
+
+  const steps = state.moves;
+  const text = travelNarration(choice, steps, poi, isNewTile);
+  journalEntry(text);
+  syncAll();
+  saveGame();
+  showModal(`Moved ${choice}`, text, poi);
+}
 </script>
 <script>
+function syncLists() {
+  const invRow = document.getElementById("invRow");
+  const peopleRow = document.getElementById("peopleRow");
+  const placesRow = document.getElementById("placesRow");
+
+  invRow.innerHTML = "";
+  peopleRow.innerHTML = "";
+  placesRow.innerHTML = "";
+
+  if (state.inventory.size === 0) invRow.innerHTML = "<span class='pill'>None yet</span>";
+  else [...state.inventory].forEach(name => {
+    const el = document.createElement("span");
+    el.className = "pill";
+    el.textContent = name;
+    invRow.appendChild(el);
+  });
+
+  if (state.metPeople.size === 0) peopleRow.innerHTML = "<span class='pill'>None yet</span>";
+  else [...state.metPeople].forEach(name => {
+    const el = document.createElement("span");
+    el.className = "pill";
+    el.textContent = name;
+    peopleRow.appendChild(el);
+  });
+
+  if (state.foundPlaces.size === 0) placesRow.innerHTML = "<span class='pill'>None yet</span>";
+  else [...state.foundPlaces].forEach(name => {
+    const el = document.createElement("span");
+    el.className = "pill";
+    el.textContent = name;
+    placesRow.appendChild(el);
+  });
+}
+
+function renderMap() {
+  const g = document.getElementById("mapGrid");
+  g.innerHTML = "";
+  for (let y = 5; y >= -5; y--) {
+    for (let x = -5; x <= 5; x++) {
+      const c = document.createElement("div");
+      c.className = "cell";
+      const k = `${state.x + x},${state.y + y}`;
+      if (state.visited.has(k)) c.classList.add("visited");
+      if (x === 0 && y === 0) c.classList.add("current");
+      g.appendChild(c);
+    }
+  }
+}
+
+function syncAll() {
+  document.getElementById("pos").textContent = `${state.x}, ${state.y}`;
+  document.getElementById("facing").textContent = ["North", "East", "South", "West"][state.facing];
+  document.getElementById("moves").textContent = `${state.moves}`;
+  renderMap();
+  syncLists();
+}
+
+function saveGame() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      ...state,
+      visited: [...state.visited],
+      inventory: [...state.inventory],
+      metPeople: [...state.metPeople],
+      foundPlaces: [...state.foundPlaces],
+      discovered: [...state.discovered.entries()]
+    }));
+  } catch {}
+}
+
+function eraseSave() {
+  localStorage.removeItem(SAVE_KEY);
+}
+
+function loadGameIfPresent() {
+  const raw = localStorage.getItem(SAVE_KEY);
+  if (!raw) return false;
+  try {
+    const o = JSON.parse(raw);
+    state = {
+      ...o,
+      visited: new Set(o.visited),
+      inventory: new Set(o.inventory),
+      metPeople: new Set(o.metPeople),
+      foundPlaces: new Set(o.foundPlaces),
+      discovered: new Map(o.discovered)
+    };
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function resetGame() {
   state = {
     seed: Date.now() >>> 0,
-    x: 0, y: 0,
+    x: 0,
+    y: 0,
     facing: 0,
     moves: 0,
     visited: new Set(["0,0"]),
@@ -738,83 +442,32 @@ function resetGame() {
     inventory: new Set(),
     metPeople: new Set(),
     foundPlaces: new Set(),
-    story: { chapter: 0, journal: [], flags: {} },
-    studentGoal: document.getElementById("goalSelect").value || "explore"
+    story: { chapter: 0, journal: [] }
   };
-  setLog("");
+  document.getElementById("log").innerHTML = "";
   syncAll();
   saveGame();
 }
 
-function chooseDirection(choice) {
-  if (!state) return;
-  if (choice === "LEFT") state.facing = turn(-1, state.facing);
-  if (choice === "RIGHT") state.facing = turn(1, state.facing);
-
-  const next = stepForwardFrom(state.x, state.y, state.facing);
-  state.x = next.x;
-  state.y = next.y;
-
-  state.moves += 1;
-  const posKey = `${state.x},${state.y}`;
-  state.visited.add(posKey);
-
-  const poi = { name: "Mysterious Place", desc: "A strange, vague location.", type: "places" };
-
-  const meta = `Moved ${choice} to (${state.x}, ${state.y})`;
-  const travelText = `You moved ${choice.toLowerCase()} and found ${poi.name}`;
-  const goalLine = "Student Goal: Explore";
-
-  syncAll();
-  saveGame();
-  showModal(meta, travelText, poi, "", goalLine);
-}
-
-function syncAll() {
-  setText("pos", `${state.x}, ${state.y}`);
-  setText("facing", ["North", "East", "South", "West"][state.facing]);
-  setText("moves", `${state.moves}`);
-}
-
-document.getElementById("btnLeft").addEventListener("click", () => chooseDirection("LEFT"));
-document.getElementById("btnStraight").addEventListener("click", () => chooseDirection("STRAIGHT"));
-document.getElementById("btnRight").addEventListener("click", () => chooseDirection("RIGHT"));
-
-document.getElementById("btnNew").addEventListener("click", resetGame);
-document.getElementById("btnClearJournal").addEventListener("click", () => {
+document.getElementById("btnLeft").onclick = () => chooseDirection("LEFT");
+document.getElementById("btnStraight").onclick = () => chooseDirection("STRAIGHT");
+document.getElementById("btnRight").onclick = () => chooseDirection("RIGHT");
+document.getElementById("btnNew").onclick = () => resetGame();
+document.getElementById("btnClearJournal").onclick = () => {
   state.story.journal = [];
-  setLog("");
+  document.getElementById("log").innerHTML = "";
   writeLog("Journal cleared.", true);
-  saveGame();
-});
-document.getElementById("btnEraseSave").addEventListener("click", () => {
+};
+document.getElementById("btnEraseSave").onclick = () => {
   eraseSave();
   writeLog("Saved game erased.", true);
-});
+};
+document.getElementById("btnContinue").onclick = hideModal;
 
-document.getElementById("btnContinue").addEventListener("click", hideModal);
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideModal(); });
-
-document.getElementById("goalSelect").addEventListener("change", () => {
-  if (!state) return;
-  state.studentGoal = document.getElementById("goalSelect").value;
-  syncAll();
-  saveGame();
-});
-
-/* Game boot */
 (function boot() {
-  const loaded = loadGameIfPresent();
-  if (loaded) {
-    document.getElementById("goalSelect").value = state.studentGoal || "explore";
-    syncAll();
-  } else {
-    resetGame();
-  }
+  if (!loadGameIfPresent()) resetGame();
+  else syncAll();
 })();
 </script>
-
-</div> <!-- close #gameApp -->
-
 </body>
 </html>
